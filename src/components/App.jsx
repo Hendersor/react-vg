@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./../styles/global.scss";
+import "./../styles/Pages.scss";
 import { Filter } from "./Filter";
 import { Movies } from "./Movies";
+import { FavoriteMovies } from "./FavoriteMovies";
 const API =
   "https://api.themoviedb.org/3/movie/popular?api_key=10a3bf76ca8c31fbf39d182f6c880706&language=en-US&page=5";
 
@@ -28,6 +30,7 @@ const App = () => {
 
   let page = 1;
   const getValue = (event) => {
+    event.preventDefault();
     console.log(event.target.value);
     // page = event.value
   };
@@ -35,7 +38,7 @@ const App = () => {
   return (
     <div>
       <Filter searchMovies={searchMovies} setSearchMovies={setSearchMovies} />
-
+      <FavoriteMovies />
       <section className="moviesList">
         {searchedMovies.map((movie) => (
           <Movies
@@ -48,7 +51,7 @@ const App = () => {
         ))}
       </section>
       <section className="pages">
-        <a onClick={getValue} href="#">
+        <a onClick={getValue} value="#" href="#">
           1
         </a>
         <a href="#">2</a>
