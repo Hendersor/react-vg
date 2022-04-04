@@ -11,12 +11,15 @@ const API =
 const App = () => {
   const [movies, setMovies] = useState([]);
   const [searchMovies, setSearchMovies] = useState([]);
+  const [favoriteMovies, setFavoriteMovies] = useState([]);
 
+  //API conection
   useEffect(async () => {
     const response = await axios(API);
     setMovies(response.data.results);
   }, []);
 
+  //Search movies
   let searchedMovies = [];
   if (!searchMovies.length >= 1) {
     searchedMovies = movies;
@@ -28,17 +31,22 @@ const App = () => {
     });
   }
 
-  let page = 1;
-  const getValue = (event) => {
-    event.preventDefault();
-    console.log(event.target.value);
-    // page = event.value
+  //Add your favorite movies
+  const pushFavoriteMovies = (movieTitle) => {
+    const getMovieIndex = movies.findIndex(
+      (movie) => movie.title == movieTitle
+    );
+    favoriteMovies.push(movies[getMovieIndex]);
+    const newFavorites = [...favoriteMovies];
+    setFavoriteMovies(newFavorites);
   };
-
   return (
     <div>
       <Filter searchMovies={searchMovies} setSearchMovies={setSearchMovies} />
-      <FavoriteMovies />
+      <FavoriteMovies
+        favoriteMovies={favoriteMovies}
+        setFavoriteMovies={setFavoriteMovies}
+      />
       <section className="moviesList">
         {searchedMovies.map((movie) => (
           <Movies
@@ -47,13 +55,14 @@ const App = () => {
             releaseDate={movie.release_date}
             moviePoster={movie.poster_path}
             rating={movie.vote_average}
+            pushFavoriteMovies={pushFavoriteMovies}
           />
         ))}
       </section>
       <section className="pages">
-        <a onClick={getValue} value="#" href="#">
+        {/* <a onClick={getValue} value="#" href="#">
           1
-        </a>
+        </a> */}
         <a href="#">2</a>
         <a href="#">3</a>
         <a href="#">4</a>
