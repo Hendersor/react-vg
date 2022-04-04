@@ -36,17 +36,28 @@ const App = () => {
     const getMovieIndex = movies.findIndex(
       (movie) => movie.title == movieTitle
     );
-    favoriteMovies.push(movies[getMovieIndex]);
-    const newFavorites = [...favoriteMovies];
-    setFavoriteMovies(newFavorites);
+
+    //Filter for dont repeat the movie
+    const dontReapet = favoriteMovies.findIndex(
+      (movie) => movie.title === movieTitle
+    );
+    if (dontReapet === -1) {
+      favoriteMovies.push(movies[getMovieIndex]);
+      const newFavorites = [...favoriteMovies];
+      setFavoriteMovies(newFavorites);
+      console.log(newFavorites);
+    }
   };
+
   return (
     <div>
       <Filter searchMovies={searchMovies} setSearchMovies={setSearchMovies} />
-      <FavoriteMovies
-        favoriteMovies={favoriteMovies}
-        setFavoriteMovies={setFavoriteMovies}
-      />
+      {favoriteMovies.length > 0 ? (
+        <FavoriteMovies
+          favoriteMovies={favoriteMovies}
+          setFavoriteMovies={setFavoriteMovies}
+        />
+      ) : null}
       <section className="moviesList">
         {searchedMovies.map((movie) => (
           <Movies
