@@ -49,6 +49,18 @@ const App = () => {
     }
   };
 
+  //Delete favorite movie
+
+  const deleteMovie = (movie) => {
+    //encontrar el titulo
+    const movieIndex = favoriteMovies.findIndex(
+      (movies) => movies.title === movie
+    );
+    favoriteMovies.splice(movieIndex, 1);
+    const newFavoriteMovies = [...favoriteMovies];
+    setFavoriteMovies(newFavoriteMovies);
+  };
+
   return (
     <div>
       <Filter searchMovies={searchMovies} setSearchMovies={setSearchMovies} />
@@ -56,6 +68,7 @@ const App = () => {
         <FavoriteMovies
           favoriteMovies={favoriteMovies}
           setFavoriteMovies={setFavoriteMovies}
+          deleteMovie={deleteMovie}
         />
       ) : null}
       <section className="moviesList">
