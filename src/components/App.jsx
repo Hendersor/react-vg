@@ -50,9 +50,7 @@ const App = () => {
   };
 
   //Delete favorite movie
-
   const deleteMovie = (movie) => {
-    //encontrar el titulo
     const movieIndex = favoriteMovies.findIndex(
       (movies) => movies.title === movie
     );
