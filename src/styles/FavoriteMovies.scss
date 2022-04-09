@@ -1,0 +1,74 @@
+.favoriteMoviesContainer {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  overflow: hidden;
+  font-family: "Montserrat", sans-serif;
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+  border: double 4px transparent;
+  border-radius: 80px;
+  background-image: linear-gradient(white, white),
+    radial-gradient(circle at top left, #f00, #3020ff);
+  background-origin: border-box;
+  background-clip: content-box, border-box;
+
+  .movieContainer {
+    display: flex;
+    flex-direction: column;
+
+    .movieName {
+      display: flex;
+      width: 100%;
+      justify-content: space-around;
+    }
+
+    .ratingContainer {
+      height: 25px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .infoFavoriteContainer {
+    background-color: #192a56;
+    color: #f5f6fa;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    width: 160px;
+    padding: 0 5px;
+    margin: 0 15px;
+    margin-bottom: 15px;
+
+    .deleteMovieContainer {
+      display: flex;
+      justify-content: space-around;
+      text-align: left;
+      flex-direction: column;
+      h1 {
+        cursor: pointer;
+        font-size: 1.3rem;
+        margin: 5px 0;
+      }
+
+      .removeMovie {
+        cursor: pointer;
+        width: 15px;
+        height: 15px;
+        align-self: center;
+      }
+    }
+  }
+
+  img {
+    width: 160px;
+    height: 230px;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    margin: 0 15px;
+    cursor: pointer;
+  }
+}
