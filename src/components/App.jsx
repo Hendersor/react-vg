@@ -6,12 +6,23 @@ import { Filter } from "./Filter";
 import { Movies } from "./Movies";
 import { FavoriteMovies } from "./FavoriteMovies";
 const API =
-  "https://api.themoviedb.org/3/movie/popular?api_key=10a3bf76ca8c31fbf39d182f6c880706&language=en-US&page=5";
+  "https://api.themoviedb.org/3/movie/popular?api_key=10a3bf76ca8c31fbf39d182f6c880706&language=en-US&page=10";
 
 const App = () => {
+  //Local Storage
+  const localStorageMovies = localStorage.getItem("MOVIES_V1");
+  let parsedMovies;
+
+  if (!localStorageMovies) {
+    localStorage.setItem("MOVIES_V1", JSON.stringify([]));
+    parsedMovies = [];
+  } else {
+    parsedMovies = JSON.parse(localStorageMovies);
+  }
+
   const [movies, setMovies] = useState([]);
   const [searchMovies, setSearchMovies] = useState([]);
-  const [favoriteMovies, setFavoriteMovies] = useState([]);
+  const [favoriteMovies, setFavoriteMovies] = useState(parsedMovies);
 
   //API conection
   useEffect(async () => {
@@ -31,6 +42,13 @@ const App = () => {
     });
   }
 
+  //Persist data in local storage
+  const saveMovies = (newMovies) => {
+    const stringifiedMovies = JSON.stringify(newMovies);
+    localStorage.setItem("MOVIES_V1", stringifiedMovies);
+    setFavoriteMovies(newMovies);
+  };
+
   //Add your favorite movies
   const pushFavoriteMovies = (movieTitle) => {
     const getMovieIndex = movies.findIndex(
@@ -44,8 +62,8 @@ const App = () => {
     if (dontReapet === -1) {
       favoriteMovies.push(movies[getMovieIndex]);
       const newFavorites = [...favoriteMovies];
-      setFavoriteMovies(newFavorites);
-      console.log(newFavorites);
+      // setFavoriteMovies(newFavorites);
+      saveMovies(newFavorites);
     }
   };
 
@@ -56,7 +74,8 @@ const App = () => {
     );
     favoriteMovies.splice(movieIndex, 1);
     const newFavoriteMovies = [...favoriteMovies];
-    setFavoriteMovies(newFavoriteMovies);
+    // setFavoriteMovies(newFavoriteMovies);
+    saveMovies(newFavoriteMovies);
   };
 
   return (
